@@ -22,7 +22,8 @@ RUN apt-get update && \
 
 COPY requirements.txt /conf/
 COPY products.csv /conf/
-RUN pip3 install --no-cache-dir --requirement /conf/requirements.txt
+RUN pip3 install --no-cache-dir --requirement /conf/requirements.txt\
+    && sed "s:from odc.aws.queue import publish_to_topic:#from odc.aws.queue import publish_to_topic:g" -i /usr/local/lib/python3.10/dist-packages/odc/apps/dc_tools/utils.py 
 
 WORKDIR /notebooks
 
